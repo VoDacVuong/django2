@@ -74,9 +74,14 @@ def CreateProfile(req):
 def CreateProfile(req):
     # print(req.data['user'])
     arr = []
+    arr1 = []
     for x in models.User.objects.all():
         arr.append(x.id)
-    if req.data['user'] in arr:
+
+    for i in models.Profile.objects.all():
+        arr1.append(i.user.id)
+    
+    if req.data['user'] in arr and req.data['user'] not in arr1:
         serializers = serializersu.ProfileSerializers(data=req.data)
         
         if serializers.is_valid():
@@ -85,5 +90,20 @@ def CreateProfile(req):
     else:
         return Response("Not is user!")
 
+@api_view(['DELETE'])
+def DeleteUser(req, key):
+    user = models.User.objects.get(id=key)
+    user.delete()
+    return Response("Successfully!")
+
+@api_view(['POST'])
+def CreateOrder(req):
+    serializers = serializersu.OrderSerializers(data=req.data)
+    if serializers.is_valid():
+        serializers.save()
+        return Response(serializers.data)
+    else:
+        return Response("Not is value!")
+    
 
 

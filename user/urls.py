@@ -9,4 +9,7 @@ urlpatterns = [
     path('listUserDetail/<int:key>/', views.listDetailUser),
     path('CreateUser/', views.CreateUser),
     path('CreateProfile', views.CreateProfile),
+    path('DeleteUser/<str:key>/', views.DeleteUser),
+    path('CreateOrder/', views.CreateOrder)
 ]
+
